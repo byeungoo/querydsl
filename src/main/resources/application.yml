@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/querydsl
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+#        show_sql: true  #시스템 아웃 출력으로 나옴. 아래 로거에서 나오는걸 사용하는게 좋음
+        format_sql: true
+
+logging.level:
+  org.hibernate.SQL: debug
+  org.hibernate.type: trace
