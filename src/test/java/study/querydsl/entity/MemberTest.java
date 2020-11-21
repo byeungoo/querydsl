@@ -93,5 +93,4 @@ public class MemberTest {
         assertThat(findMember.getUsername()).isEqualTo("member1");
     }
 
-
 }
