@@ -84,7 +84,7 @@ public class MemberTest {
     public void startQuerydsl() {
         //member1을 찾아라.
         JPAQueryFactory queryFactory = new JPAQueryFactory(em);
-        QMember m = new QMember("m");  //이름을 하나줌. 어떤 q 멤버인지 구분.
+        QMember m = new QMember("m");  //이름을 하나줌. 어떤 q 멤버인지 구분.  같은테이블 조인해야하는 경우에만 이렇게 쓰기.
         Member findMember = queryFactory
                 .select(m)
                 .from(m)

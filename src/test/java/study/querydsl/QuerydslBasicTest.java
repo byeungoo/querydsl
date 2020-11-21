@@ -1,6 +1,8 @@
 package study.querydsl;
 
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import study.querydsl.entity.Member;
@@ -9,6 +11,9 @@ import study.querydsl.entity.Team;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static study.querydsl.entity.QMember.member;
+
 @SpringBootTest
 @Transactional
 public class QuerydslBasicTest {
@@ -16,8 +21,12 @@ public class QuerydslBasicTest {
     @PersistenceContext
     private EntityManager em;
 
+    JPAQueryFactory queryFactory;  //필드로 가져와도 됨. 멀티스레딩에서도 잘 동작하게 설계가 되있음.
+
     @BeforeEach
     public void before() {
+        queryFactory = new JPAQueryFactory(em);
+
         Team teamA = new Team("teamA");
         Team teamB = new Team("teamB");
         em.persist(teamA);
@@ -30,6 +39,17 @@ public class QuerydslBasicTest {
         em.persist(member2);
         em.persist(member3);
         em.persist(member4);
+    }
+
+    @Test
+    public void startQuerydsl3() {
+        //member1을 찾아라.   QMember에 있는 member를 static으로 사용하는걸 권장.
+        Member findMember = queryFactory
+                .select(member)
+                .from(member)
+                .where(member.username.eq("member1"))
+                .fetchOne();
+        assertThat(findMember.getUsername()).isEqualTo("member1");
     }
 
 }
