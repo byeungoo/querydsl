@@ -485,4 +485,37 @@ public class QuerydslBasicTest {
         System.out.println("result : " + result);
     }
 
+    @Test
+    public void simpleProjection(){
+        List<String> result = queryFactory
+                .select(member.username)
+                .from(member)
+                .fetch();
+
+        for (String s : result) {
+            System.out.println("s = " + s);
+        }
+
+    }
+
+    /*
+     * tuple의 경우 repository 정도에서만 사용하기.
+     * 밖으로 나갈 때는 dto로 변환해서 나가는걸 권장.
+     */
+    @Test
+    public void tupleProjection(){
+        List<Tuple> result = queryFactory
+                .select(member.username, member.age)
+                .from(member)
+                .fetch();
+
+        for (Tuple tuple : result) {
+            String username = tuple.get(member.username);
+            Integer age = tuple.get(member.age);
+            System.out.println("username = " + username);
+            System.out.println("age = " + age);
+        }
+
+    }
+
 }
