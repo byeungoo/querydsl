@@ -1,16 +1,19 @@
 package study.querydsl.entity;
 
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+import study.querydsl.dto.MemberDto;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.xmlunit.builder.Input.from;
 
 @SpringBootTest
 @Transactional
@@ -80,6 +83,7 @@ public class MemberTest {
                 .getSingleResult();
         assertThat(findMember.getUsername()).isEqualTo("member1");
     }
+
     @Test
     public void startQuerydsl() {
         //member1을 찾아라.
